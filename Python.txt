@@ -1,0 +1,135 @@
+--Errors, the programmer's daily bread
+
+
+import math
+
+x = float(input("Enter x: "))
+y = math.sqrt(x)
+
+print("The square root of", x, "equals to", y)
+
+----------------------------
+
+
+Enter x: -5
+Traceback (most recent call last):
+  File "main.py", line 4, in 
+    y = math.sqrt(x)
+ValueError: math domain error
+
+
+Enter x: A
+Traceback (most recent call last):
+  File "main.py", line 3, in 
+    x = float(input("Enter x: "))
+ValueError: could not convert string to float: 'A'
+
+
+How to workaround those issues and protect the code from processing a wrong entered value ? simply by using Exceptions 
+
+Excpetion is a type of data created once your code generates an error
+
+If an error got generated during the code execution python has no idea what to do and will stop executing the code 
+
+Unless if the exception is taken care of and handled properly, the suspended program can be resumed and its execution can continue.
+
+In the example above both the below are a(ValueError) exception with different diagnostic message:
+ValueError: math domain error
+ValueError: could not convert string to float: 'A' 
+
+other Exception types:
+
+ZeroDivisionError: division by zero
+IndexError: list index out of range
+
+
+We can handle the exceptions using the keyword try
+
+
+first_number = int(input("Enter the first number: "))
+second_number = int(input("Enter the second number: "))
+
+try:
+    print(first_number / second_number)
+except:
+    print("This operation cannot be done.")
+
+print("THE END.")
+
+
+
+The except keyword starts a piece of code which will be executed if anything inside the try block goes wrong
+If an exception is raised inside a previous try block it will fail so the code located after the except keyword should provide an adequate reaction to the raised exception
+
+
+You can be more specific regarding the exception as below and the exception block will be executed based on its type:
+
+try:
+    x = int(input("Enter a number: "))
+    y = 1 / x
+    print(y)
+except ZeroDivisionError:
+#this block will exectue iff a division by zero occured 
+    print("You cannot divide by zero, sorry.")
+except ValueError:
+#this block will exectue iff a float value is entered
+    print("You must enter an integer value.")
+except:
+#this block will exectue for the rest of possible errors
+    print("Oh dear, something went wrong...")
+
+print("THE END.")
+
+if any of the except branches is executed, no other branches will be visited;
+
+
+
+--The anatomy of exceptions
+
+Python has 63 built-in exceptions, and all of them form a tree-shaped hierarchy
+
+
+an example:
+
+BaseException
+↑
+Exception
+↑
+ArithmeticError
+↑
+ZeroDivisionError
+
+
+
+If you want to handle two or more exceptions in the same way, you can use the following syntax:
+
+try:
+    :
+except (exc1, exc2):
+    :
+
+
+An exception can cross the function and module boundaries, and travel through the invocation chain looking for a matching except clause able to handle it.
+
+
+
+You can rasie an exception by yourself using the keyword raise 
+
+
+Another keyword is assert 
+It evaluates the expression
+If the expression evaluates to true, non-zero value non-emty string or any other value different than None it will not do anything 
+othwerise it will rasie an AssertionError
+It is like generating an error on purpose rather than contiuing the code in a worng way 
+
+
+Exceptions in the standard Python library:
+https://docs.python.org/3.6/library/exceptions.html
+
+-->
+BaseException
+Location: BaseException
+
+Description: the most general (abstract) of all Python exceptions – all other exceptions are included in this one; 
+it can be said that the following two except branches are equivalent: except: and except BaseException:.
+
