@@ -1,0 +1,167 @@
+The foundations of OOP
+______________________
+
+In the procedural approach, it's possible to distinguish two different and completely separate worlds: the world of data, and the world of code. 
+
+The world of data is populated with variables of different kinds, while the world of code is inhabited by code grouped into modules and functions.
+
+Functions are able to use data, but not vice versa
+
+The object approach is quite young (much younger than the procedural approach) and is particularly useful when applied to big and complex projects carried out by large teams consisting of many developers.
+
+
+With OOP The data and the code are enclosed together in the same world, divided into classes.
+
+There are some special kinds of data that can use functions named methods. 
+
+Every class is like a recipe which can be used when you want to create a useful object
+
+A class is an idea (more or less abstract) which can be used to create a number of incarnations – such an incarnation is called an object.
+
+Every object has a set of traits (they are called properties or attributes) and is able to perform a set of activities (which are called methods).
+
+When a class is derived from another class, their relation is named inheritance. The class which derives from the other class is named a subclass. 
+
+When a class is derived from another class, their relation is named inheritance. The class which derives from the other class is named a subclass. 
+
+Each subclass is more specialized (or more concrete) than its superclass. Conversely, each superclass is more general (more abstract) than any of its subclasses.
+
+A properly constructed class (and thus, its objects) are able to protect the sensible data and hide it from unauthorized modifications.
+
+The recipes may be modified if they are inadequate for specific purposes and, in effect, new classes may be created. These new classes inherit properties and methods from the originals, and usually add some new ones.
+
+The second side of this relation is named superclass. 
+
+An object is a being belonging to a class.
+
+Objects are equipped with:
+--a name which identifies them and allows us to distinguish between them
+--a set of properties (the set can be empty)
+--a set of methods (can be empty, too)
+
+
+
+=To define a Python class, you need to use the class keyword. For example:
+class This_Is_A_Class:
+    pass
+ 
+=To create an object of the previously defined class, you need to use the class as if it were a function. For example:
+this_is_an_object = This_Is_A_Class()
+
+
+A short journey from procedural to object approach
+__________________________________________________
+
+The example of a Stack:
+LIFO
+Last In – First Out
+
+A stack is an object with two elementary operations, conventionally named push (when a new element is put on the top) and pop (when an existing element is taken away from the top).
+
+-------------------
+Procedural approach
+-------------------
+stack = []
+
+
+def push(val):
+    stack.append(val)
+
+
+def pop():
+    val = stack[-1]
+    del stack[-1]
+    return val
+
+
+push(3)
+push(2)
+push(1)
+
+print(pop())
+print(pop())
+print(pop())
+
+
+the essential variable (the stack list) is highly vulnerable
+the functioning of the stack will be completely disorganized
+it may also happen that one day you need more than one stack; you'll have to create another list for the stack's storage, and probably other push and pop functions too
+
+
+------------------------
+Object Oriented approach
+------------------------
+The object-oriented approach delivers solutions for each of these problems.
+the ability to hide (protect) selected values against unauthorized access 
+you can produce as many stacks as you want; you needn't copy or replicate any part of the code
+you can create a new class (a subclass) which inherits all the existing traits from the superclass, and adds some new ones.
+
+
+we need a function called the constructor
+
+it has to be named in a strict way; the constructor's name is always __init__;
+it is invoked implicitly, when the new object is created.
+it has to have at least one parameter, the obligatory parameter is usually named self – it's only a convention, but you should follow it
+
+class Stack:  # Defining the Stack class.
+    def __init__(self):  # Defining the constructor function.
+        print("Hi!")
+	self.__stack_list = [] #with two underscores the list is hidden from the outside world
+
+    def push(self, val):
+        self.__stack_list.append(val)
+
+
+    def pop(self):
+        val = self.__stack_list[-1]
+        del self.__stack_list[-1]
+        return val
+
+stack_object = Stack()  # Instantiating the object.
+    
+
+for the functions push and pop those components are called public, so you can't begin its name with two (or more) underscores. 
+There is one more requirement – the name must have no more than one trailing underscore. 
+As no trailing underscores at all fully meets the requirement, you can assume that the name is acceptable.
+Here, both functions have a parameter named self at the first position of the parameters list.
+
+
+Let's add a new class for handling stacks.
+The new class should be able to evaluate the sum of all the elements currently stored in the stack.
+
+class AddingStack(Stack):
+    def __init__(self):
+        Stack.__init__(self)
+        self.__sum = 0
+
+The first line explicitly invoke a superclass's constructor. Omitting this point will have harmful effects 
+The second line of the constructor's body creates a property named __sum – it will store the total of all the stack's values.
+Since we will use the same methods push and pop we can add them as the used in the existing ones:
+
+class AddingStack(Stack):
+    def __init__(self):
+        Stack.__init__(self)
+        self.__sum = 0
+
+    def get_sum(self):
+        return self.__sum
+
+    def push(self, val):
+        self.__sum += val
+        Stack.push(self, val)
+
+    def pop(self):
+        val = Stack.pop(self)
+        self.__sum -= val
+        return val
+
+
+
+A class method is actually a function declared inside the class and able to access all the class's components.
+The part of the Python class responsible for creating new objects is called the constructor, and it's implemented as a method of the name __init__
+Each class method declaration must contain at least one parameter (always the first one) usually referred to as self, and is used by the objects to identify themselves.
+If we want to hide any of a class's components from the outside world, we should start its name with __. Such components are called private.
+
+
+
+
