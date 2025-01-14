@@ -1,0 +1,381 @@
+OOP: Properties
+---------------
+Two different kinds of data to form a class's properties
+
+Instance variables
+
+
+Python objects, when created, are gifted with a small set of predefined properties and methods.
+One of them is a variable named __dict__ (it's a dictionary).
+It contains the names and values of all the properties (variables) the object is currently carrying. Let's make use of it to safely present an object's contents.
+
+
+class ExampleClass:
+    def __init__(self, val = 1):
+        self.first = val
+ 
+    def set_second(self, val):
+        self.second = val
+ 
+ 
+example_object_1 = ExampleClass()
+example_object_2 = ExampleClass(2)
+ 
+example_object_2.set_second(3)
+ 
+example_object_3 = ExampleClass(4)
+example_object_3.third = 5
+ 
+print(example_object_1.__dict__)
+print(example_object_2.__dict__)
+print(example_object_3.__dict__)
+
+
+----------------------------------------
+
+{'first': 1}
+{'first': 2, 'second': 3}
+{'first': 4, 'third': 5} 
+
+example_object_3 has been enriched with a property named third just on the fly, outside the class's code - this is possible and fully permissible.
+
+
+
+Class variables
+
+a property which exists in just one copy and is stored outside any object.
+
+no instance variable exists if there is no object in the class; a class variable exists in one copy even if there are no objects in the class.
+
+class ExampleClass:
+    counter = 0
+    def __init__(self, val = 1):
+        self.__first = val
+        ExampleClass.counter += 1
+ 
+ 
+example_object_1 = ExampleClass()
+example_object_2 = ExampleClass(2)
+example_object_3 = ExampleClass(4)
+ 
+print(example_object_1.__dict__, example_object_1.counter)
+print(example_object_2.__dict__, example_object_2.counter)
+print(example_object_3.__dict__, example_object_3.counter)
+
+---------------------------
+
+{'_ExampleClass__first': 1} 3
+{'_ExampleClass__first': 2} 3
+{'_ExampleClass__first': 4} 3
+
+
+there is an assignment in the first line of the class definition – it sets the variable named counter to 0; initializing the variable inside the class but outside any of its methods makes the variable a class variable
+
+class variables aren't shown in an object's __dict__
+a class variable always presents the same value in all class instances (objects)
+
+
+
+When Python sees that you want to add an variable to an object and you're going to do it inside any of the object's methods, it mangles the operation in the following way:
+
+it puts a class name before your name;
+it puts an additional underscore at the beginning.
+
+accessing a non-existing object (class) attribute causes an AttributeError exception.
+
+
+Python provides a function which is able to safely check if any object/class contains a specified property. The function is named hasattr, and expects two arguments to be passed to it:
+
+the class or the object being checked;
+the name of the property whose existence has to be reported 
+
+
+An instance variable is a property whose existence depends on the creation of an object. Every object can have a different set of instance variables.
+
+Moreover, they can be freely added to and removed from objects during their lifetime. All object instance variables are stored inside a dedicated dictionary named __dict__, contained in every object separately.
+
+
+An instance variable can be private when its name starts with __, but don't forget that such a property is still accessible from outside the class using a mangled name constructed as _ClassName__PrivatePropertyName.
+
+
+
+
+A class variable is a property which exists in exactly one copy, and doesn't need any created object to be accessible. Such variables are not shown as __dict__ content.
+
+All a class's class variables are stored inside a dedicated dictionary named __dict__, contained in every class separately
+
+A function named hasattr() can be used to determine if any object/class contains a specified property.
+
+
+
+
+
+OOP: Methods
+------------
+
+a method is a function embedded inside a class.
+
+a method is obliged to have at least one parameter 
+
+The first (or only) parameter is usually named self
+
+The self parameter is used to obtain access to the object's instance and class variables.
+
+If you want the method to accept parameters other than self, you should place them after self in the method's definition and deliver them during invocation without specifying self (as previously)
+
+
+class Classy:
+    def method(self, par):
+        print("method:", par)
+ 
+ 
+obj = Classy()
+obj.method(1)
+obj.method(2)
+obj.method(3)
+
+If you name a method like this: __init__, it won't be a regular method – it will be a constructor.
+
+If a class has a constructor, it is invoked automatically and implicitly when the object of the class is instantiated.
+
+Note that the constructor cannot return a value, as it is designed to return a newly created object and nothing else and cannot be invoked directly either from the object or from inside the class
+
+Everything we've said about property name mangling applies to method names, too – a method whose name starts with __ is (partially) hidden.
+
+
+Each Python class and each Python object is pre-equipped with a set of useful attributes which can be used to examine its capabilities.
+__dict__
+__name__   absent from the object – it exists only inside classes.
+to find the class of a particular object, you can use a function named type()
+__module__
+__bases__ only classes have this attribute – objects don't.
+
+
+
+
+Reflection and introspection
+
+introspection, which is the ability of a program to examine the type or properties of an object at runtime;
+reflection, which goes a step further, and is the ability of a program to manipulate the values, properties and/or functions of an object at runtime.
+
+
+OOP Fundamentals: Inheritance
+-----------------------------
+
+When Python needs any class/object to be presented as a string (putting an object as an argument in the print() function invocation fits this condition) it tries to invoke a method named __str__() from the object and to use the string it returns.
+
+
+Inheritance is a common practice (in object programming) of passing attributes and methods from the superclass (defined and existing) to a newly created class, called the subclass.
+
+Python offers a function which is able to identify a relationship between two classes, and although its diagnosis isn't complex, it can check if a particular class is a subclass of any other class.
+
+There is one important observation to make: each class is considered to be a subclass of itself.
+
+The function named isinstance() returns True if the object is an instance of the class, or False otherwise, Such could be detected by :
+
+The is operator checks whether two variables (object_one and object_two here) refer to the same object.
+
+
+
+class Super:
+    def __init__(self, name):
+        self.name = name
+
+    def __str__(self):
+        return "My name is " + self.name + "."
+
+
+class Sub(Super):
+    def __init__(self, name):
+        Super.__init__(self, name)
+
+
+obj = Sub("Andy")
+
+print(obj)
+    
+--------------------------------------------------
+
+class Super:
+    def __init__(self, name):
+        self.name = name
+
+    def __str__(self):
+        return "My name is " + self.name + "."
+
+
+class Sub(Super):
+    def __init__(self, name):
+        super().__init__(name)
+
+
+obj = Sub("Andy")
+
+print(obj)
+    
+
+both above codes produce the same output
+we make use of the super() function, which accesses the superclass without needing to know its name
+use this mechanism not only to invoke the superclass constructor, but also to get access to any of the resources available inside the superclass.
+
+
+When you try to access any object's entity, Python will try to (in this order):
+
+-find it inside the object itself;
+-find it in all classes involved in the object's inheritance line from bottom to top;
+-If both of the above fail, an exception (AttributeError) is raised.
+
+
+
+
+-----------------------------------------
+class Level1:
+    variable_1 = 100
+    def __init__(self):
+        self.var_1 = 101
+
+    def fun_1(self):
+        return 102
+
+
+class Level2(Level1):
+    variable_2 = 200
+    def __init__(self):
+        super().__init__()
+        self.var_2 = 201
+    
+    def fun_2(self):
+        return 202
+
+
+class Level3(Level2):
+    variable_3 = 300
+    def __init__(self):
+        super().__init__()
+        self.var_3 = 301
+
+    def fun_3(self):
+        return 302
+
+
+obj = Level3()
+
+print(obj.variable_1, obj.var_1, obj.fun_1())
+print(obj.variable_2, obj.var_2, obj.fun_2())
+print(obj.variable_3, obj.var_3, obj.fun_3())
+------------------
+>
+100 101 102
+200 201 202
+300 301 302
+
+
+
+
+
+Multiple inheritance occurs when a class has more than one superclass
+
+The entity defined later (in the inheritance sense) overrides the same entity defined earlier.
+
+
+We can say that Python looks for object components in the following order:
+
+-inside the object itself;
+-in its superclasses, from bottom to top;
+-if there is more than one class on a particular inheritance path, Python scans them from left to right.
+
+the subclass is able to modify its superclass behavior this is called polymorphism.
+
+which means that one and the same class can take various forms depending on the redefinitions done by any of its subclasses.
+
+
+Composition is the process of composing an object using other different objects
+
+
+
+What is Method Resolution Order (MRO)
+Python's MRO cannot be bent or violated, not just because that's the way Python works, but also because it’s a rule you have to obey.
+
+Look at the below examples:
+----------------------------------------------------------------------------------------------------------------------------------------------------
+class Top:
+    def m_top(self):
+        print("top")
+
+
+class Middle(Top):
+    def m_middle(self):
+        print("middle")
+
+
+class Bottom(Middle):
+    def m_bottom(self):
+        print("bottom")
+
+
+object = Bottom()
+object.m_bottom()
+object.m_middle()
+object.m_top()
+-------------------------------
+
+bottom
+middle
+top
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+
+class Top:
+    def m_top(self):
+        print("top")
+
+
+class Middle(Top):
+    def m_middle(self):
+        print("middle")
+
+
+class Bottom(Middle, Top):
+    def m_bottom(self):
+        print("bottom")
+
+
+object = Bottom()
+object.m_bottom()
+object.m_middle()
+object.m_top()
+------------------------------
+bottom
+middle
+top
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+#now look
+
+class Top:
+    def m_top(self):
+        print("top")
+
+
+class Middle(Top):
+    def m_middle(self):
+        print("middle")
+
+
+class Bottom(Top, Middle):
+    def m_bottom(self):
+        print("bottom")
+
+
+object = Bottom()
+object.m_bottom()
+object.m_middle()
+object.m_top()
+----------------------------
+
+Traceback (most recent call last):
+  File "main.py", line 11, in <module>
+    class Bottom(Top, Middle):
+TypeError: Cannot create a consistent method resolution
+order (MRO) for bases Top, Middle
+
