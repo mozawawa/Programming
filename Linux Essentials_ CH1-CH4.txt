@@ -1,0 +1,184 @@
+Linux means the kernel of the system, which is the central controller of everything that happens on the computer.
+
+When most people refer to Linux, they are really referring to a combination of software called GNU/Linux, 
+which defines the operating system. 
+GNU is the free software that provides open source equivalents of many common UNIX commands. 
+The Linux part of this combination is the Linux kernel, which is the core of the operating system. 
+The kernel is loaded at boot time and stays running to manage every aspect of the functioning system.
+
+
+UNIX is written in the C language making it uniquely portable amongst competing operating systems, 
+which were typically closely tied to the hardware for which they were written.
+
+
+The development of Linux closely parallels the rise of open source software. 
+The open source philosophy is that you have a right to obtain the software source code and to modify it for your own use.
+
+
+Like UNIX, there are distributions suited to every imaginable purpose. 
+There are distributions that focus on running servers, desktops, or even industry-specific tools such as electronics design or statistical computing. 
+The major players in the market can be traced back to either Red Hat, Debian or Slackware. 
+The most visible difference between Red Hat and Debian derivatives is the package manager though there are other differences in everything from file locations to political philosophies.
+
+
+Linux users typically obtain an operating system by downloading a distribution.
+A Linux distribution is a bundle of software, typically comprised of the Linux kernel, utilities, management tools, 
+and even some application software in a package which also includes the means to update core software and install additional applications.
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+An operating system is software that 
+runs on a computing device 
+manages the hardware and software components that make up a functional computing system.
+schedule programs to run in a multi-tasking manner 
+provide standard services that allow users and programs to request something happen 
+
+
+
+Computer users today have a choice mainly between three major operating systems: Microsoft Windows, Apple macOS, and Linux.
+
+Microsoft Windows is unique in its underlying code, the only one that is not unix or linux based
+Apple’s macOS is a fully-qualified UNIX distribution based on BSD Unix and runs on hardware specifically optimized to work with Apple software.
+Linux can be any one of hundreds of distribution packages designed or optimized for whatever task is required
+
+
+Decision Points to choose an OS:
+Role
+Function
+Life Cycle: 
+
+Operating systems and software upgrades come on a periodic basis, called a release cycle, 
+Vendors only support older versions of software for a certain period of time before not offering any updates; this is called a maintenance cycle or life cycle
+
+Stability
+Compatibility
+Cost
+Interface
+
+
+Linux OS:
+The distribution takes care of 
+-setting up the storage
+-building the kernel 
+-installing hardware drivers 
+-installing applications and utilities to make a fully functional computer system. 
+-include tools to manage the system
+-package manager to add and remove software, as well as update programs to provide security and functionality patches.
+
+
+Linux Distributions:
+
+Red Hat: server applications , as CentOS and Scientific Linux
+
+SUSE: derived from Slackware and also openSUSE 
+
+Debian:  community effort , as Ubuntu and linux mint
+
+Adnroid: by google
+
+Raspbian optimized to run on Raspberry Pi hardware
+
+Linux From Scratch (LFS)
+
+Eventually, Linux started supporting other chips with an emphasis on small size and low power consumption.
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Applications make requests to the kernel and in return receive resources, such as memory, CPU, and disk space. 
+
+If two applications request the same resource, the kernel decides which one gets it, and in some cases, kills off another application to save the rest of the system and prevent a crash.
+
+The kernel also abstracts some complicated details away from the application. 
+
+For example, the application doesn’t know if a block of disk storage is on a solid-state drive, a spinning metal hard disk, or even a network file share. 
+Applications need only follow the kernel’s Application Programming Interface (API) and therefore don’t have to worry about the implementation details. 
+Each application behaves as if it has a large block of memory on the system
+The kernel maintains this illusion by remapping smaller blocks of memory, sharing blocks of memory with other applications, or even swapping out untouched blocks to disk.
+
+The kernel also handles the switching of applications, a process known as multitasking.
+A computer system has a small number of central processing units (CPUs) and a finite amount of memory. 
+The kernel takes care of unloading one task and loading a new one if there is more demand than resources available. 
+When one task has run for a specified amount of time, the CPU pauses it so that another may run. 
+If the computer is doing several tasks at once, the kernel is deciding when to switch focus between tasks. 
+With the tasks rapidly switching, it appears that the computer is doing many things at once.
+
+The kernel doesn’t differentiate between a user-facing application, a network service that talks to a remote computer, or an internal task. 
+From this, we get an abstraction called a process. 
+A process is just one task that is loaded and tracked by the kernel. 
+An application may even need multiple processes to function, so the kernel takes care of running the processes, starting and stopping them as requested, and handing out system resources.
+
+
+
+Web Servers: WordPress ,Apache ,NGINX
+Database Servers: MySQL ,MariaDB ,SQL
+Mail Servers POP/IMAP : Dovecot  from windwos (Microsoft Exchange)
+File sharing : Samba, Netatalk , LDAP and OpenLDAP 
+Console Tools: Shell (Bash), 
+Text Editors: Vi, Vim Pico, Nano
+
+Package Management: 
+
+modern distributions use packages, which are compressed files that bundle up an application and its dependencies (or required files), greatly simplifying the installation by making the right directories, copying the proper files into them, and creating such needed items as symbolic links.
+A package manager takes care of keeping track of which files belong to which package and even downloading updates from repositories, typically a remote server sharing out the appropriate updates for a distribution. In Linux, there are many different software package management systems, but the two most popular are those from Debian and Red Hat.
+
+-Debian
+.deb extension 
+dpkg command
+apt-get command
+
+-RPM
+.rpm extension
+rpm command 
+zypper
+
+Development Languages:
+C
+C++
+Java
+Javascript
+Perl
+PHP
+Ruby
+Python
+
+
+
+
+The Linux systems administrator is often the person responsible for setting and enforcing password policies for users at all levels. 
+The most privileged user on any Linux system is root; this account is the primary administrator and is created when the operating system is installed. 
+Often administrators will disable root access as the first line of defense against intrusion since computer hackers will try to gain root access in order to take control of the system.
+
+
+
+Cloud Computing:
+
+Virtualization
+Virtualization is one of the most significant advancements that has contributed to the enablement cloud of computing.
+Virtualization is the process where one physical computer, called the host, runs multiple copies of an operating system, each copy called a guest.
+The host system runs software called a hypervisor that switches resources between the various guests just like the Linux kernel does for individual processes.
+With bare metal hypervisors, the hypervisor runs directly on computer hardware rather than on top of an OS freeing up more resources for guest images.
+
+Containers and Bare Metal Deployments
+With the rise of containerization technologies like Docker and Kubernetes application software is now being written that runs in a serverless environment.
+programmers are creating software that does one single function of a system that runs in a container.
+
+
+
+
+Open source takes a source-centric view of software. 
+The open source philosophy is that users have the right to obtain the software source code, and to expand and modify programs for their own use. 
+This also meant the code could be inspected for backdoors, viruses, and spyware. 
+By creating a community of developers and users, accountability for bugs, security vulnerabilities, and compatibility issues became a shared responsibility. 
+This new, global community of computer enthusiasts was empowered by the growing availability of faster internet services and the world wide web.
+
+Linux has adopted this philosophy to great success. 
+Since Linux was written in the C programming language, and it mirrored the design and functionality of already established UNIX systems.
+Linux naturally became a forum where people could develop and share new ideas. 
+Freed from the constraints of proprietary hardware and software platforms, large numbers of very skilled programmers have been able to contribute to the various distributions, making for software that is often more robust, stable, adaptable, and, frankly, better than the proprietary, closed source offerings which dominated the previous decades.
+
+Two groups can be considered the most influential forces in the world of open source: the Free Software Foundation and the Open Source Initiative.
+
+Companies like Tivo have packaged hardware or add extra closed source software to sell alongside the free software. Appliances and embedded systems that use Linux are a multi-billion dollar business and encompass everything from home DVRs to security cameras and wearable fitness devices. Many consumer firewalls and entertainment devices follow this model.
+
